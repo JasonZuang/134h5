@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Widget</title>
+</head>
+<body>
+  <div id="weather-widget">
+    <h1>Current Weather</h1>
+    <div id="weather-info">Conditions Unavailable</div>
+  </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const weatherWidget = document.getElementById('weather-widget');
+    const weatherElement = document.getElementById("weather-info");
+
+    // Replace with your National Weather Service API endpoint
+    const apiUrl = 'https://api.weather.gov/gridpoints/TOP/32,81/forecast';
+
+    fetch(apiUrl).then(response => response.json())
+    .then(data =>{
+        console.log(data);
+        const temperature = data.properties.periods[0].temperature;
+        const shortForecast = data.properties.periods[0].shortForecast;
+        console.log(temperature);
+        console.log(shortForecast);
+        const iconUrl = data.properties.periods[0].icon;
+        weatherElement.innerHTML = `<img src="${iconUrl}" alt="Weather Icon"> <p>${temperature} °F - ${shortForecast}</p>`;
+
+        });
+    });
+</script>
+</html>
